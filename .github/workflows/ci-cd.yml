@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -60,9 +60,9 @@ jobs:
       - name: Push Frontend Image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
 
-      # 7️⃣ Docker Compose
+      # 7️⃣ Docker Compose (commande moderne)
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
       # 8️⃣ Wait & Check Containers
       - name: Wait
