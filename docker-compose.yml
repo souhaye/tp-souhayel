@@ -1,11 +1,4 @@
 services:
-  angular-app:
-    image: frontend:latest
-    ports:
-      - "4200:80"
-    depends_on:
-      - spring-boot-app
-
   spring-boot-app:
     image: backend:latest
     ports:
@@ -16,6 +9,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: pass
     depends_on:
       - mysql
+
+  angular-app:
+    image: frontend:latest
+    ports:
+      - "4200:80"
+    depends_on:
+      - spring-boot-app
 
   mysql:
     image: mysql:8
