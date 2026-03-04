@@ -25,12 +25,13 @@ jobs:
       - name: Build Backend (Spring Boot)
         run: mvn clean package -f ./springboot/app/pom.xml
 
-      # 3️⃣ Frontend Setup - Node.js + npm
+      # 3️⃣ Frontend Setup - Node.js + npm avec cache
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: angular-app/package-lock.json
 
       - name: Build Frontend (Angular)
         run: |
