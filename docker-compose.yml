@@ -1,26 +1,8 @@
-version: "3.9"
-
 services:
-  spring-boot-app:
-    image: backend:latest
-    ports:
-      - "8081:8081"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/testdb
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pass
-    depends_on:
-      - mysql
-
-  angular-app:
-    image: frontend:latest
-    ports:
-      - "4200:80"
-    depends_on:
-      - spring-boot-app
 
   mysql:
-    image: mysql:8
+    image: mysql:5.7
+    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: testdb
@@ -28,8 +10,19 @@ services:
       MYSQL_PASSWORD: pass
     ports:
       - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
 
-volumes:
-  mysql-data:
+  spring-app:
+    build: ./springboot/app
+    container_name: spring-boot-app
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+
+  angular-app:
+    build: ./angular-app
+    container_name: angular-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - spring-app
